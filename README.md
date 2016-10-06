@@ -12,3 +12,10 @@ as well as for many other optical/IR observatories.
 The meeting will include an optional training day (Day Zero) on
 November 8 to provide novice participants an introduction to Python
 and Astropy.
+
+This will be an interactive workshop so be sure to come with a laptop
+with a reasonably up-to-date Python distribution.  If you're not sure
+what this might mean, we recommend you install the [Anaconda python
+distribution](https://anaconda.org), and add the astroconda repository
+maintained by STScI on top of that.  Full instructions for this can be
+found at http://astroconda.readthedocs.io/en/latest/.
