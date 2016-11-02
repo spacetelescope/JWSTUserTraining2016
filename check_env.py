@@ -39,7 +39,7 @@ pkgs = {'IPython': '5.1',
         'astropy': '1.2.1',
         'photutils': '0.2.2',
         'skimage': '0.12.3',
-        'pandas': '0.19.0',
+        'pandas': '0.18.1',
         'glue': '0.8.2',
         'imexam': '0.6',
         'ginga': '2.5.20161005204600'
