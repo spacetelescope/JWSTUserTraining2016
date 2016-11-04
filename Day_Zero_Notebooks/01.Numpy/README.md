@@ -1,3 +1,3 @@
-### Numpy Tutorial
+### Introduction to Numpy
 
 **Instructor**: Megan Sosey
