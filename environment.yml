@@ -1,0 +1,11 @@
+name: jwst-training-workshop
+
+channels:
+  - http://ssb.stsci.edu/astroconda
+
+dependencies:
+  - python=3.5
+  - numpy
+  - scipy
+  - matplotlib
+  - astropy
