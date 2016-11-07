@@ -9,3 +9,4 @@ dependencies:
   - scipy
   - matplotlib
   - astropy
+  - glue >= 0.9.1
