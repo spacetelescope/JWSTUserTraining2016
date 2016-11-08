@@ -7,6 +7,7 @@ Usage::
   % python check_env.py
 """
 
+import sys
 from distutils.version import LooseVersion
 
 
@@ -44,6 +45,10 @@ pkgs = {'IPython': '5.1',
         'imexam': '0.6.2',
         'ginga': '2.5.20161005204600'
         }
+
+if sys.platform.startswith('win'):
+    pkgs.pop('imexam')
+    pkgs.pop('ginga')
 
 errors = []
 for package_name, min_version in pkgs.items():

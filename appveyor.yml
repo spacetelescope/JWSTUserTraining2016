@@ -28,3 +28,4 @@ build: false
 
 test_script:
     - "%CMD_IN_ENV% conda env create -n jwst-workshop --file environment_win.yml"
+    - "%CMD_IN_ENV% python check_env.py"
