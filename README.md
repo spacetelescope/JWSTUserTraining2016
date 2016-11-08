@@ -47,7 +47,7 @@ but you can change that to any other desirable name.
 
 
 You can run the ``check_env.py`` script to perform a basic check of your
-Python environment and some of the required dependencies::
+Python environment and some of the required dependencies:
 
 ```shell
 % python check_env.py
