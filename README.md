@@ -56,6 +56,12 @@ you will need using this environment file:
 The command above will create an environment called "jwst-workshop",
 but you can change that to any other desirable name.
 
+**Note for windows users:** use the ``environment_win.yml`` file instead:
+
+```
+% conda env create -n jwst-workshop --file environment_win.yml
+% source activate jwst-workshop
+```
 
 You can run the ``check_env.py`` script to perform a basic check of your
 Python environment and some of the required dependencies:
