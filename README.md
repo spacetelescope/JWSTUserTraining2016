@@ -39,6 +39,7 @@ you will need using this environment file:
 
 ```shell
 % conda env create -n jwst-workshop --file environment.yml
+source activate jwst-workshop
 ```
 
 The command above will create an environment called "jwst-workshop",
