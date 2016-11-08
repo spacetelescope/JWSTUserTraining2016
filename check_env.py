@@ -38,11 +38,12 @@ pkgs = {'IPython': '5.1',
         'scipy': '0.15',
         'matplotlib': '1.3',
         'astropy': '1.2.1',
-        'photutils': '0.2.2',
+        'photutils': '0.3',
         'skimage': '0.12.3',
         'pandas': '0.18.1',
         'glue': '0.8.2',
         'imexam': '0.6.2',
+        'astroquery': '0.3',
         'ginga': '2.5.20161005204600'
         }
 
