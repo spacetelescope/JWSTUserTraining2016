@@ -15,6 +15,12 @@ and Astropy.
 
 ## Installation/Setup
 
+First, download this repository by either doing:
+
+    git clone http://github.com/spacetelescope/JWSTUserTraining2016.git
+
+or by clicking on **Clone or Download** above the list of files and clicking on **Download ZIP**. Then, cd into this directory.
+
 This will be an interactive workshop so be sure to come with a laptop
 prepared to try out some of the tools that will be discussed and
 demoed.  Before arriving at the workshop next week, we ask that you
@@ -31,9 +37,9 @@ If you have trouble installing using the above files (or are using
 Windows), you will need to download anaconda separately
 (https://www.continuum.io/downloads), and then install Astroconda on
 top following the instructions here:
-http://astroconda.readthedocs.io/en/latest/ .
+http://astroconda.readthedocs.io/en/latest/.
 
-If you already have Anaconda installed on your machine, you can create
+Once you have Astroconda installed, or if you have Anaconda already installed, you can create
 a special environment for this workshop which contains all the software
 you will need using this environment file:
 
@@ -41,6 +47,8 @@ you will need using this environment file:
 % conda env create -n jwst-workshop --file environment.yml
 % source activate jwst-workshop
 ```
+
+**Note:** you need to be inside the ``JWSTUserTraining2016`` directory for this to work.
 
 The command above will create an environment called "jwst-workshop",
 but you can change that to any other desirable name.
