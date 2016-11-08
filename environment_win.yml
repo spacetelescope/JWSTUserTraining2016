@@ -24,5 +24,4 @@ dependencies:
   - requests
   - keyring
   - html5lib
-  - pip:
-    - astroquery
+  - astroquery
