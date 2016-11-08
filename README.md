@@ -15,21 +15,24 @@ and Astropy.
 
 ## Installation/Setup
 
+This will be an interactive workshop so be sure to come with a laptop
+prepared to try out some of the tools that will be discussed and
+demoed.
+
 First, download this repository by either doing:
 
     git clone http://github.com/spacetelescope/JWSTUserTraining2016.git
 
 or by downloading and expanding [this](https://github.com/spacetelescope/JWSTUserTraining2016/archive/master.zip) file. Then, cd into the ``JWSTUserTraining2016`` directory.
 
-This will be an interactive workshop so be sure to come with a laptop
-prepared to try out some of the tools that will be discussed and
-demoed.  Before arriving at the workshop next week, we ask that you
-install the the Anaconda distribution for Python 3.5, which we have
+If you don't already have Anaconda installed, install the the Anaconda distribution for Python 3.5, which we have
 packaged along with some additional software.  Downloads for Mac and
 Linux can be found at:
 
 * http://ssb.stsci.edu/conda/installers/AstroConda-1.0.2-Linux-x86_64.sh
 * http://ssb.stsci.edu/conda/installers/AstroConda-1.0.2-MacOSX-x86_64.sh
+
+**Note:** please do this ahead of the workshop if possible
 
 These include both Anaconda and the AstroConda software repository,
 which contains additional tools that will be shown at the workshop.
