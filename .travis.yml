@@ -14,4 +14,4 @@ install:
 
 script:
     - conda env create -n jwst-workshop --file environment.yml
-
+    - python check_env.py
