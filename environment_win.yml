@@ -1,7 +1,6 @@
 name: jwst-training-workshop
 
 channels:
-  - http://ssb.stsci.edu/astroconda
   - astropy
   - conda-forge
 
