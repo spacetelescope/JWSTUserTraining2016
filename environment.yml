@@ -10,8 +10,12 @@ dependencies:
   - matplotlib>=1.3
   - astropy>=1.2.1
   - photutils>=0.2.2
-  - skimage>=0.12.3
+  - scikit-image>=0.12.3
   - pandas>=0.18.1
+  - glue-vispy-viewers>=0.6
   - glueviz>=0.9.1
   - imexam>=0.6
   - ginga>=2.5.20161005204600
+  - jupyter
+  - notebook
+  - ipython
