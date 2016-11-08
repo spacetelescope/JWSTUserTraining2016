@@ -65,7 +65,7 @@ dependencies:
 - get_terminal_size=1.0.0=py35_0
 - gevent=1.1.2=py35_0
 - ginga=2.5.20161005204600=np111py35_0
-- glueviz=0.8.2=py35_1
+- glueviz=0.9.1
 - greenlet=0.4.10=py35_0
 - h5py=2.6.0=np111py35_2
 - hdf5=1.8.17=1
@@ -133,7 +133,7 @@ dependencies:
 - patsy=0.4.1=py35_0
 - pep8=1.7.0=py35_0
 - pexpect=4.0.1=py35_0
-- photutils=0.2.2=np111py35_1
+- photutils=0.3=np111py35_1
 - pickleshare=0.7.4=py35_0
 - pillow=3.3.1=py35_0
 - pip=8.1.2=py35_0
