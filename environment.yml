@@ -19,3 +19,5 @@ dependencies:
   - jupyter
   - notebook
   - ipython
+  - asdf>=1.2.1
+  - gwcs>=0.6
