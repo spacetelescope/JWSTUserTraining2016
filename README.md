@@ -38,7 +38,8 @@ a special environment for this workshop which contains all the software
 you will need using this environment file:
 
 ```shell
-% conda env create -n jwst-workshop --file jwst-workshop.yml 
+% conda env create -n jwst-workshop --file environment.yml
+% source activate jwst-workshop
 ```
 
 The command above will create an environment called "jwst-workshop",
@@ -46,7 +47,7 @@ but you can change that to any other desirable name.
 
 
 You can run the ``check_env.py`` script to perform a basic check of your
-Python environment and some of the required dependencies::
+Python environment and some of the required dependencies:
 
 ```shell
 % python check_env.py
