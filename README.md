@@ -13,6 +13,8 @@ The meeting will include an optional training day (Day Zero) on
 November 8 to provide novice participants an introduction to Python
 and Astropy.
 
+## Installation/Setup
+
 This will be an interactive workshop so be sure to come with a laptop
 prepared to try out some of the tools that will be discussed and
 demoed.  Before arriving at the workshop next week, we ask that you
@@ -35,8 +37,9 @@ If you already have Anaconda installed on your machine, you can create
 a special environment for this workshop which contains all the software
 you will need using this environment file:
 
-
-conda env create -n jwst-workshop --file jwst-workshop.yml 
+```shell
+% conda env create -n jwst-workshop --file jwst-workshop.yml 
+```
 
 The command above will create an environment called "jwst-workshop",
 but you can change that to any other desirable name.
@@ -45,7 +48,9 @@ but you can change that to any other desirable name.
 You can run the ``check_env.py`` script to perform a basic check of your
 Python environment and some of the required dependencies::
 
-  % python check_env.py
+```shell
+% python check_env.py
+```
 
 If you have issues getting set up, you can also run the notebooks on mybinder.org:
 
