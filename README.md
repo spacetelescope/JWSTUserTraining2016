@@ -19,7 +19,7 @@ First, download this repository by either doing:
 
     git clone http://github.com/spacetelescope/JWSTUserTraining2016.git
 
-or by clicking on **Clone or Download** above the list of files and clicking on **Download ZIP**. Then, cd into this directory.
+or by downloading and expanding [this](https://github.com/spacetelescope/JWSTUserTraining2016/archive/master.zip) file. Then, cd into the ``JWSTUserTraining2016`` directory.
 
 This will be an interactive workshop so be sure to come with a laptop
 prepared to try out some of the tools that will be discussed and
