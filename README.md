@@ -42,9 +42,10 @@ Windows), you will need to download anaconda separately
 top following the instructions here:
 http://astroconda.readthedocs.io/en/latest/.
 
-Once you have Astroconda installed, or if you have Anaconda already installed, you can create
+If you have Anaconda already installed, and have not used the shell installer above, you can create
 a special environment for this workshop which contains all the software
-you will need using this environment file:
+you will need using the environment file below. If you've already used the installer
+above you should already have all the software you need on your machine:
 
 ```shell
 % conda env create -n jwst-workshop --file environment.yml
