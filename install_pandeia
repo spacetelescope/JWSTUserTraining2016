@@ -9,12 +9,18 @@ if [[ -z "${vol// }" ]]; then
     exit
 fi
 
-tarball="$vol/data/tables/pandeia.tgz"
+tarball="$vol/data/pandeia/pandeia.tgz"
+cdbs="$vol/data/pandeia/cdbs.tgz"
 
 echo "Unpacking $tarball in current directory..."
 tar xvvzf $tarball
+echo "Unpacking $cdbs in current directory..."
+tar xvvzf $cdbs
 export pandeia_refdata=`pwd`/pandeia_data
+export PYSYN_CDBS=`pwd`/cdbs.23.1.rc3
 cd pandeia/engine
 python setup.py install
 cd -
-echo "Done. pandeia_refdata set to $pandeia_refdata."
+echo "Done."
+echo "pandeia_refdata set to $pandeia_refdata."
+echo "PYSYN_CDBS set to $PYSYN_CDBS."
