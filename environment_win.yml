@@ -15,8 +15,6 @@ dependencies:
   - pandas>=0.18.1
   - glue-vispy-viewers>=0.6
   - glueviz>=0.9.1
-  - imexam>=0.6
-  - ginga>=2.5.20161005204600
   - jupyter
   - notebook
   - ipython
