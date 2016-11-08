@@ -1,0 +1,17 @@
+language: c
+
+os:
+  - linux
+  - osx
+
+env:
+  global:
+    - PYTHON_VERSION=3.5
+
+install:
+    - git clone git://github.com/astropy/ci-helpers.git
+    - source ci-helpers/travis/setup_conda_$TRAVIS_OS_NAME.sh
+
+script:
+    - conda env create -n jwst-workshop --file environment.yml
+
