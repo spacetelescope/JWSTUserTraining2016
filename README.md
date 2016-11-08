@@ -38,7 +38,7 @@ a special environment for this workshop which contains all the software
 you will need using this environment file:
 
 ```shell
-% conda env create -n jwst-workshop --file jwst-workshop.yml 
+% conda env create -n jwst-workshop --file environment.yml
 ```
 
 The command above will create an environment called "jwst-workshop",
