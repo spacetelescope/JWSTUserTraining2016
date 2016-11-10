@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if [ "$1" = "" ]
+then
+    dir=`dirname $0`
+    cd $dir/..
+else
+    cd $1
+fi
+
+# (claims to be portable, but not portable.)
+# branch=`git status --porcelain -b | head -1 | sed -e 's/##//' -e 's/\.\.\..*$//'`
+# "## autobuild...origin/autobuild"
+
+# (doesn't claim to be portable but appears to be)
+branch=`git branch | sed -n '/\*/s/\* //gp'`
+# "* autobuild"
+
+echo $branch
+

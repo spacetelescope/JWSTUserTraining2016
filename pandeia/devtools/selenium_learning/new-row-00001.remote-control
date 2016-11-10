@@ -1,0 +1,23 @@
+# -*- coding: utf-8 -*-
+from selenium import selenium
+import unittest, time, re
+
+class new_niriss_imaging_row(unittest.TestCase):
+    def setUp(self):
+        self.verificationErrors = []
+        self.selenium = selenium("localhost", 4444, "*chrome", "http://barabbas.home:4490/")
+        self.selenium.start()
+    
+    def test_new_niriss_imaging_row(self):
+        sel = self.selenium
+        sel.open("/workbook.html#")
+        sel.click("id=nirisspopover")
+        sel.click("link=Imaging")
+        sel.click("//tr[@id='3']/td[4]")
+    
+    def tearDown(self):
+        self.selenium.stop()
+        self.assertEqual([], self.verificationErrors)
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,0 +1,14 @@
+{
+    "noise": {
+        "darkcurrent": true,
+        "crs": true,
+        "rn_correlation": true,
+        "ffnoise": true,
+        "readnoise": true
+    },
+    "effects": {
+        "ipc": true,
+        "saturation": true,
+        "background": true
+    }
+}

@@ -1,0 +1,47 @@
+Debugging calculations that from the client
+--
+
+If you know the workbook number and calculation number:
+
+	import pandeia.engine.perform_calculation as p
+	import pandeia.server.tools.dpc as dpc
+	import pandeia.server.worker.engine_check as e
+
+	# load the engine inputs
+	d_in=dpc.from_db(1010,1)
+
+	# run the calculation with an elapsed time report
+	d_out = dpc.perform_calculation(d_in)
+
+	# run the engine directly
+	d_out = p.perform_calculation( d_in )
+
+	# type check the engine output
+	e.engine_check(d_out)
+
+
+misc tools:
+
+	# show dict using pandokia's pretty print
+	dpc.dprint(d_in)
+	dpc.dprint(d_out,open("f","w"))
+
+	# print key/type hierarchy
+	dpc.keys(d_out)
+
+	# tkdiff dict contents
+	dpc.ddiff( d1, d2 )
+
+	# tkdiff dict keys/types
+	dpc.tdiff( d1, d2 )
+
+
+looking at the transaction history of a session:
+
+	In debug mode, wssvc keeps a log of the json messages
+	transacted in each session.  See log/trans.wssvc*.*
+
+	The number at the end is a monotonically incrementing session
+	counter.  You can usually identify the log file you are
+	interested in by "ls -ltr"
+

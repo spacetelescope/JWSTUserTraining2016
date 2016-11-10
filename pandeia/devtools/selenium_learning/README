@@ -1,0 +1,26 @@
+# References
+ * https://pypi.python.org/pypi/selenium
+ * http://www.seleniumhq.org/
+
+
+# Python Selenium documentation
+ * http://selenium-python.readthedocs.org/
+
+# Installation
+ * Install Firefox
+ * Install ureka ssbx
+ * pip install -U selenium
+
+# Selenium IDE Test Cases/Suite
+ * Currently assumes that the workbook "MRSS 349-013456" is loaded as anoymous user
+
+
+# Python Code
+ * Script is test_recorded_usage.py
+ * Assumes no server back-end is present.
+ * Just checks page elements
+ * directly loads etcbrady.stsci.edu:4242/workbook.html
+
+# Issues
+ * When exporting from Selenium IDE to Python code, remove the trailing '/' from the base_url in the setUp() method
+

@@ -1,0 +1,36 @@
+Using wbdisp to monitor behaviour of the ui client
+--
+
+ 
+In a development version of pandeia, the landing page has a link
+for "Workbook Display test interface".  It links to /dev/wbdisp.html
+This is a simplified interface that is mostly read-only.
+
+1) In Window A, log in to the real user interface - you will see a
+list of workbooks
+
+2) in Window B, load wbdisp.html - you will see a list of workbooks
+
+3) select a workbook to use as an example
+
+4) Click "load" next to that workbook on Window B; tables with the
+content of that workbook will appear.  The backgrounds will be blue.
+
+5) Click "[Load]" for that workbook in Window A.
+
+6) on Window B, click "Clear Table Colors".  All the tables will
+turn white.
+
+7) Perform an action in Window A.  When it saves a change, the
+server will respond with a message to both windows.
+
+In Window B, each table cell that is updated by a message from
+the server will turn blue.  You can identify which cells/rows
+were saved by the UI client by observing which cells change colors.
+Click "Clear Table Colors" to reset them all to white.
+
+In the calculation table, the "C" will change colors according to
+the status of a calculation in progress.
+
+Click on "D" to display the result information for that row.
+

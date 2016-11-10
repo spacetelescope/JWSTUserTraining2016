@@ -1,0 +1,16 @@
+{
+    "obsmode": {
+        "filter": "none",
+        "instrument": "miri",
+        "disperser": "short",
+        "mode": "mrs",
+        "aperture": "ch4"
+    },
+    "exposure": {
+        "subarray": "full",
+        "nexp": 1,
+        "ngroup": 10,
+        "nint": 1,
+        "readmode": "fast"
+    }
+}

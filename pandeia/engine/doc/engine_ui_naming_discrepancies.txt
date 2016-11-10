@@ -1,0 +1,2 @@
+- what engine calls 'sed' is called 'continuum' in the UI.
+

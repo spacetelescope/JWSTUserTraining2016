@@ -1,0 +1,85 @@
+Description of sample_config.pdf
+--
+
+Client Interaction
+--
+
+The client browser connects to jwst.etc.stsci.edu.  This is the load
+balancing proxy for incoming HTTPS connections.  Each request is directed
+to a main_server process on one of the server machines.  In this
+example, there are two main_server instances.  There is no session
+affinity.
+
+main_server hands out static HTML and performs authentication.
+Users can log in via:
+        - the SSO system
+        - creating an account in the SSO system
+          (once that feature is available)
+        - the "anonymous login" button
+        - fake_login
+          (test systems only)
+
+( The SSO interactions are not shown here, but it consists of
+redirecting the user to SSO services and then back to main_server,
+which validates that the authentication took place as expected. 
+This application has no "failed login" because you never get back
+from the SSO in that case. )
+
+For all cases, the user is issued a session cookie and redirected to a
+"you are logged in" page.  
+
+When they click "Proceed", they are presented with the "Workbook
+List" page.  From there, they can create, delete, or open workbooks.
+
+The Workbook List page and the Workbook page are static HTML and
+Javascript that are fetched from the main_server.  The javascript
+uses websockets to send JSON-formatted messages directly to the
+wssvc processes.  The main server will tell them which host:port
+to use, depending on what the user is asking to do.
+
+Once a workbook is open, the session is maintained with that wssvc
+for the duration.
+
+The workbook page contains some plots.  Those are requested via
+https from the same server that has the websocket for that client.
+
+All of the machine names for the application are under the domain
+etc.stsci.edu.  The TLS certificate is for *.etc.stsci.edu.
+
+
+Brief Server Internals
+--
+
+The main_server is a monolithic program.  It delivers the static
+HTML files and performs database updates connected with authentication.
+It tracks (in the database) information needed to assign a client
+to a specific wssvc.
+
+Except for coordination and session tracking, wssvc does most of
+its work by forwarding websocket messages to a connected broker,
+which in turn selects a worker to perform the work.  The worker
+sends back whatever replies are necessary via the reverse path.  In
+some cases, a reply may go to more than one client, depending on
+what the clients are doing
+
+In this example, there are two machines hosting wssvc.  These are
+the machines that need to be reachable from the internet.  There
+is an additional machine hosting only workers and brokers, which
+does not.
+
+The third machine is shown running some workers for each of the
+two wssvc, but you can see that a specific worker only services
+a single wssvc.
+
+This configuration permits additional machines to be added to the
+system at times of heavier load.  New main_server processes must
+be known to the load balancer.  New wssvc, new brokers, and new
+workers are automatically recognized by the system as they are
+started.
+
+Due our limited programmer resources, we will manage problems very
+coarsely.  There are many cases where a crash will intentionally
+cascade through the entire chain from worker all the way back to
+client.  The client may then reconnect (where it will be assigned
+an active wssvc), resulting in a primitive form of fault tolerance.
+

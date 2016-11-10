@@ -1,26 +1,31 @@
 #!/bin/bash
 
-# use df command and look for the mounted USB drive
-df_cmd=`df | grep JWST_UT16`
-vol=${df_cmd##* }
+# specify path to USB drive or directory comtaining its contents
+data_path=$1
+data_path=${data_path##* }
 
-if [[ -z "${vol// }" ]]; then
-    echo "USB drive not found!"
-    exit
+if [[ -z "${data_path// }" ]]; then
+    echo "No path specified."
+else
+
+    tarball="$data_path/pandeia.tgz"
+    cdbs="$data_path/cdbs.tgz"
+
+    if [ -f $tarball ] && [ -f $cdbs ]; then
+        echo "Unpacking $tarball in current directory..."
+        tar xvvzf $tarball
+        echo "Unpacking $cdbs in current directory..."
+        tar xvvzf $cdbs
+        export pandeia_refdata=`pwd`/pandeia_data
+        export PYSYN_CDBS=`pwd`/cdbs.23.1.rc3
+        cd pandeia/engine
+        python setup.py install
+        cd -
+        echo "Done."
+        echo "pandeia_refdata set to $pandeia_refdata."
+        echo "PYSYN_CDBS set to $PYSYN_CDBS."
+    else
+        echo "Pandeia or CDBS data is missing from $data_path."
+    fi
+
 fi
-
-tarball="$vol/data/pandeia/pandeia.tgz"
-cdbs="$vol/data/pandeia/cdbs.tgz"
-
-echo "Unpacking $tarball in current directory..."
-tar xvvzf $tarball
-echo "Unpacking $cdbs in current directory..."
-tar xvvzf $cdbs
-export pandeia_refdata=`pwd`/pandeia_data
-export PYSYN_CDBS=`pwd`/cdbs.23.1.rc3
-cd pandeia/engine
-python setup.py install
-cd -
-echo "Done."
-echo "pandeia_refdata set to $pandeia_refdata."
-echo "PYSYN_CDBS set to $PYSYN_CDBS."

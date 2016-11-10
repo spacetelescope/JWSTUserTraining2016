@@ -1,0 +1,63 @@
+Mark's work pattern:
+
+Install the system as described in doc/install/install.txt .  This
+assumes an empty system, rather than trying to work with your
+existing environment.  The advantage of doing this is that you have
+a reproducible install that resembles the production install.  (If
+you want to construct your own install, you'll have to figure out
+how to make it work and how to fix it if it breaks.)
+
+When you take your laptop from place to place, its name changes.
+You may find it necessary to re-initialize your database.
+
+To work on a system that contains a server:
+
+create 3 terminal windows.  In each terminal window, type
+
+	 ur_setup - pda
+
+then enter one of these commands in each
+
+	xtname start
+	xtname ui_install
+	xtname engine_install
+		# xtname is included in ureka
+
+In "start",
+	cd ...wherever you installed pandeia...
+
+	setenv STARTER 127
+		# for a server on 127.0.0.1 - works without network
+
+	./ctrl is
+		# does: shut down, purge, initdb, start
+
+	./ctrl start
+	./ctrl crash
+	...etc...
+		# see doc/install/run.txt
+
+in "ui_install",
+
+	cd pandeia/ui
+
+	python setup.py install
+	cp -r client/. ...wherever you installed pandeia.../client/.
+
+in "engine_install",
+
+	cd pandeia/engine
+
+	python setup.py install
+
+
+create additional terminal windows for working / editing.
+
+When you edit the client or server, switch to the "ui_install"
+window and repeat the install commands.  When you edit the engine,
+switch to the "engine_install" window and repeat the commands.
+After that, switch to the "start" window and restart the server.
+
+Bookmark http://127.0.0.1:PORT with your PORT number.
+
+

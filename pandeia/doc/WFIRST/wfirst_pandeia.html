@@ -1,0 +1,173 @@
+<html>
+    <body>
+        <div class="figure">
+            <img src="wfirst_galaxy_sn.png" alt="High-redshift galaxy with superimposed SN viewed in six filters.">
+            Simulated high-redshift galaxy with a superimposed supernova, viewed in the six filters of the WFIRST Wide Field
+            Instrument. Axes are labeled in arcseconds.
+        </div>
+
+        <h3>
+            Introduction to Pandeia for WFIRST
+        </h3>
+
+        <p>
+        Pandeia is the exposure time calculator (ETC) system that is being developed for the James Webb Space Telescope
+        (JWST).  It's based on a Python engine that calculates three-dimensional data cubes, based on user-specified spatial
+        and spectral properties of one or more sources. The cubes are projected to a detector plane given an instrument
+        configuration and two-dimensional pixel-by-pixel signal and noise properties are extracted.  This allows for appropriate
+        handling of realistic point spread
+        functions (as calculated by <a href="http://www.stsci.edu/wfirst/software/webbpsf">WebbPSF</a>), MULTIACCUM detector
+        readouts, correlated detector readnoise, dithering, and multiple photometric and spectrscopic extraction strategies.
+        Pandeia includes support for a wide variety of observing modes and has a highly modular, data-driven design that allows
+        for easy extensibility to other instruments and telescopes.
+        </p>
+
+        <p>
+        This extensibility has been applied to create an implementation of the WFIRST Imager (WFI), as it is currently
+        prototyped.
+        </p>
+
+        <h3>
+            Functionality
+        </h3>
+
+        <p>
+        Pandeia is designed to perform high-fidelity modeling of a small, representative portion of a detector image and to
+        allow for extensive parameter space investigations.
+        This typically small "postage-stamp" field of view is referred to as the "scene" and is composed of one or more
+        astronomical sources.  The size of the scene
+        is dynamic and can in principle be arbitrarily large.  However, because of the detail involved in the calculations
+        Pandeia performs, calculations for very large scenes are not currently supported.
+        <a href="http://www.stsci.edu/wfirst/software/STIPS">STIPS</a> is the more appropriate tool for simulating full fields
+        of view.
+        </p>
+
+        <p>
+        Pandeia supports both point and extended sources.  Extended sources are modeled by a Sersic surface brightness profile
+        with major/minor axis scale lengths, a position angle, and a Sersic index (e.g. n=1 for exponential disk, n=0.5 for
+        gaussian, and n=4 for de Vaucoulers).  A wide variety of source spectra are available for use
+        including power-law, blackbody, stars (via a grid of
+        <a href="http://www.hs.uni-hamburg.de/index.php?option=com_content&view=article&id=14&Itemid=891&lang=en">Phoenix
+        models</a>), and integrated spectra of a range extragalactic objects
+        (via <a href="http://iopscience.iop.org/article/10.1088/0067-0049/212/2/18/meta">Brown et al. (2014)</a>).  It is also
+        possible to add emission and absorption lines to a spectrum as well as input custom spectra. Normalization of source flux is
+        accomplished by providing a flux density (e.g. mJy or AB mag) at a specific wavelength or a magnitude in a specific
+        bandpass (e.g. SDSS <it>z</it>).
+        </p>
+
+        <p>
+        The output of a Pandeia calculation provides 2D signal-to-noise maps as well as extracted flux and signal-to-noise
+        products that are defined by a flux extraction strategy.  For WFIRST imaging, this consists of aperture photometry
+        with a circular source aperture and annular background estimation region.  WFIRST IFU will support strategies that use
+        dithers to facilitate background subtraction.
+        </p>
+
+        <h3>
+            Using Pandeia-WFIRST
+        </h3>
+
+        <p>
+        Pandeia is currently under rapid development in the lead-up to the initial limited release for JWST in 2016.  As such,
+        it must be considered <em>a work in progress</em>.  Several planned features are not yet implemented.
+        </p>
+
+        <p>
+        The code for Pandeia is not yet openly available and the only
+        way to access it currently is via a <a href="http://jupyter.org/">Jupyter</a> notebook interface on the WFIRST
+        <a href="https://github.com/jupyter/jupyterhub">JupyterHub</a> server at
+        <a href="https://wfirst-tools.stsci.edu">https://wfirst-tools.stsci.edu</a>.  Please refer to our
+        <a href="file:///wfirst/software/wfirst-tools-server">WFIRST Tools Server</a> page for details on how to request an account
+        and how to access/use the system.  Since the software is presently
+        in beta release, access is restricted to people connected to the WFIRST Project and Science Teams.
+        </p>
+
+        <p>
+        Example notebooks are provided on the JupyterHub server that include simple GUIs for configuring calculations and
+        displaying basic results. They also contain more detailed examples and documentation on how to customize the
+        calculation inputs, analyze the outputs, and set up scripts for doing batch analysis.
+        </p>
+
+        <div class="figure">
+            <img src="full_gui.png" alt="Pandeia-WFIRST Jupyter notebook-based graphical interface.">
+            Screenshot of the Jupyter notebook interface for Pandeia-WFIRST.  This illustrates its layout, how the results
+            are presented in the form of interactive plots, and its use of realistic input spectra.
+        </div>
+
+        <div class="figure">
+            <img src="two_src.png" alt="Pandeia-WFIRST calculation results including a point and extended source.">
+            An example of a Pandeia-WFIRST calculation that has been modified to add a second source.  This illustrates Pandeia's
+            ability to model multiple sources of various sizes, shapes, and positions and thus include the effects of
+            contaminating flux in the final signal-to-noise calculations.
+        </div>
+
+        <h3>
+            Documentation
+        </h3>
+
+        <p>
+            Much of the Pandeia documentation has yet to be written. Some basic API documentation will be provided along with the
+            notebooks. A paper describing the general approach, features, and design of Pandeia is in preparation.  For now
+            users are encouraged to cite the Pandeia paper Pontoppidan et al. (2016, in prep.) which will be presented at the
+            SPIE Astronomical Telescopes and Instrumentation conference in 2016.
+        </p>
+
+        <h3>
+            Assumptions and Caveats
+        </h3>
+
+        <p>
+            Pandeia functionality in general and its WFIRST functionality in particular is still in continued development.
+            The present implementation is made available to the community as a <strong>beta</strong> version.
+        </p>
+        <p>
+            The WFIRST Mission is not yet in development and observatory designs continue to evolve.  Hence, Pandeia simulations
+            may not accurately reflect the actual future observatory.
+        </p>
+        <p>
+            At this stage the model for the WFI makes several assumptions and approximations:
+            <ul>
+                <li> The Pandeia WFIRST WFI model is based on the Cycle 5 WFIRST design revision and it incorporates information
+                    from the <a href="http://wfirst.gsfc.nasa.gov/science/Instrument_Reference_Information.html">GSFC Instrument
+                        Reference Information</a> files.
+                <li> PSFs are obtained using the <a href="http://www.stsci.edu/wfirst/software/WebbPSF">WebbPSF</a> software
+                    for a notional point within the WFI field-of-view. The field-dependence of the PSF is not currently accounted
+                    for within Pandeia.
+                <li> The filter transmission for broad-band PSF and Pandeia calculations is assumed to be flat across the filter
+                    bandpass.
+                <li> The readout pattern and subarray configurations are modeled after those currently planned for JWST's NIRCam
+                    imager.
+            </ul>
+        <p>
+
+        <h3>
+            Future Improvements
+        </h3>
+
+        <p>
+            We are planning on many additions and improvements for future Pandeia versions. These include the following:
+            <ul>
+                <li> Support for WFI IFU and grism observations (coming soon)
+                <li> Support for observations with the WFIRST Coronagraph (planned for later)
+                <li> Improvements to the graphical notebook interface to support new observing modes, support adding
+                    multiple sources to a calculation, and expanding the ways to define source flux (e.g. SDSS magnitudes).
+                <li> Better filter transmission curves, once these have been measured and released by the project.
+                <li> Other fixes and features based on community feedback.
+            </ul>
+        </p>
+
+        <h3>
+            Credits, Acknowledgements, and Feedback
+        </h3>
+
+        <p>
+        Pandeia is developed by the ETC team at STScI which is lead by Victoria G. Laidler. The Pandeia ETC engine and
+        WFIRST extension are developed by Klaus Pontoppidan and Timothy Pickering.
+        </p>
+
+        <p>
+        Users are encouraged to address questions, suggestions, and bug reports to
+        <a href="mailto:help@stsci.edu">help@stsci.edu</a> with "Pandeia-WFIRST question" in the subject line. The message will
+        then be directed to the appropriate members of the Pandeia-WFIRST team at STScI.
+        </p>
+    </body>
+</html>

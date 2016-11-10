@@ -1,0 +1,123 @@
+How to make a release of pandeia
+---
+
+
+bring up vpn if working remotely
+
+log in to the build machine and go to the source directory used for the tests
+get the commit hashes
+
+	cd pandeia
+	git log --pretty=oneline | head -1
+
+	cd ../pandeia_data
+	git log --pretty=oneline | head -1
+
+	cd ../pandeia_test
+	git log --pretty=oneline | head -1
+
+save all the hash ids
+	pandeia		24295157a2e2b7ca045d4d2c31d44c7b2b21e643
+	pandeia_data	accd580c4ff193fdfedf1ae896c3c76c994e3d2d
+	pandeia_test	462ba0f7bab7d1a00df32f47723a0833d90adc88
+
+on a work machine
+
+	release=pps11
+
+	cd pandeia
+	cd ../pandeia_data
+	cd ../pandeia_test
+
+		git checkout master
+		git pull origin master
+
+		git checkout -b $release <hash>
+		git push origin $release
+
+
+on the target machine
+
+	su iraf
+	exec sh
+
+	release=<whatever>
+
+	cd /data1
+
+	mkdir pandeia_$release
+
+	cd pandeia_$release
+
+	# install a suitable ureka
+
+	/eng/ssb/websites/ssbpublic/ureka/data_analysis_build1/install_ureka_data_analysis_build1
+		# use the name pandeia_$release
+		# do not configure login scripts
+
+	eval `Ureka/misc/ur_setup -sh`
+
+	# install the branch you created
+
+	c=/data1/pandeia_nightly/master/src/pandeia/devtools/install/devinit
+
+	$c `pwd` $release
+
+	cat > run << 'ARF'
+#!/bin/sh
+cd `dirname $0`
+eval `Ureka/misc/ur_setup -sh`
+export STARTER=localhost_many
+./devrun start
+ARF
+
+	chmod 755 run
+
+	## don't do this yet - it it crashes, we want to collect
+	## some data files before restart
+	## echo $cwd >> /data1/boot/active
+
+	THE PORT IS 4242
+
+	cd /data1/pandeia_$release/src/pandeia/ui/client
+
+	cp bounce_demo.html demo.html
+
+	vi demo.html
+		change the version to $release.0 (or .1 or whatever)
+
+	remove the <span> for "See what works"
+
+
+-> restart here when somebody wants changes
+
+	-->make customizations
+	-->change the .0/.1/whatever in demo.html
+
+	cd /data1/pandeia_$release
+	eval `Ureka/misc/ur_setup -sh`
+	export STARTER=localhost_many
+	./devrun cleanstart
+
+	open http://etcdevens.stsci.edu:4242
+		try it out
+
+	cd src/pandeia
+	git commit -m'customize bounce page' ui/client/bounce.html
+	
+	git status
+		# look for anything odd
+
+	git push origin $release
+
+	cd ..
+
+	tag=$release.0
+		# or whatever
+
+	cd pandeia
+	cd ../pandeia_data
+	cd ../pandeia_test
+		git tag $tag -m$tag
+		git push origin $tag
+
