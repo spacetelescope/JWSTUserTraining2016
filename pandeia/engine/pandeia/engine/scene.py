@@ -15,7 +15,7 @@ class Scene(object):
 
     Parameters
     ----------
-    inp : dict or list (optional, default None)
+    input : dict or list (optional, default None)
         Dictionary input must contain a 'Scene' section concordant with the engine input API.
         Can also provide a pre-made list of source.Source objects. If no input supplied,
         then default to single default source.Source().
@@ -35,23 +35,23 @@ class Scene(object):
         Get the full extent of the scene.
     """
 
-    def __init__(self, inp=None, offset=None, webapp=False, **kwargs):
+    def __init__(self, input=None, offset=None, webapp=False, **kwargs):
         self.webapp = webapp
         self.warnings = {}
         self.sources = []
-        if isinstance(inp, dict):
+        if isinstance(input, dict):
             try:
                 # if we get a full engine API dict, fish the scene out
-                if 'scene' in inp['scene']:
-                    self._from_list(inp['scene'])
+                if 'scene' in input['scene']:
+                    self._from_list(input['scene'])
                 else:
                     # if we're a dict, but not a full engine API one, try adding as a source
-                    self.add_sources(inp)
+                    self.add_sources(input)
             except KeyError as e:
                 message = "Input dict must have source information in engine API format: %s" % e
                 raise EngineInputError(value=message)
-        elif isinstance(inp, list):
-            self._from_list(inp)
+        elif isinstance(input, list):
+            self._from_list(input)
         else:
             self.sources = [src.Source()]
 

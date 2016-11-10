@@ -1147,7 +1147,7 @@ class DetectorNoise(object):
         return var_rn
 
 
-def calculate_sn(inp, webapp=False):
+def calculate_sn(input, webapp=False):
     """
     This is a function to do the 'forward' exposure time calculation where given a dict
     in engine API input format we calculate the resulting Signal/Noise and return a Report
@@ -1166,17 +1166,17 @@ def calculate_sn(inp, webapp=False):
     """
     warnings = {}
     try:
-        scene_configuration = inp['scene']
-        background = inp['background']
-        instrument_configuration = inp['configuration']
-        strategy_configuration = inp['strategy']
+        scene_configuration = input['scene']
+        background = input['background']
+        instrument_configuration = input['configuration']
+        strategy_configuration = input['strategy']
     except KeyError as e:
         message = "Missing information required for the calculation: %s" % str(e)
         raise EngineInputError(value=message)
 
     # get the calculation configuration from the input or use the defaults
-    if 'calculation' in inp:
-        calc_config = CalculationConfig(config=inp['calculation'])
+    if 'calculation' in input:
+        calc_config = CalculationConfig(config=input['calculation'])
     else:
         calc_config = CalculationConfig()
 
@@ -1201,7 +1201,7 @@ def calculate_sn(inp, webapp=False):
     # set to 'contrast' and we need to run calculate_contrast.
     if hasattr(strategy, "calc_type"):
         if strategy.calc_type == "contrast":
-            r = calculate_contrast(inp, webapp=webapp)
+            r = calculate_contrast(input, webapp=webapp)
         else:
             msg = "Unsupported calculation type: %s" % strategy.calc_type
             raise EngineInputError(value=msg)
@@ -1261,12 +1261,12 @@ def calculate_sn(inp, webapp=False):
         extracted_sn = strategy.extract(my_detector_signal_list, my_detector_noise_list)
         warnings.update(extracted_sn['warnings'])
         # #### END calculation #### #
-        r = Report(inp, my_detector_signal_list, my_detector_noise_list, my_detector_saturation_list, extracted_sn, warnings)
+        r = Report(input, my_detector_signal_list, my_detector_noise_list, my_detector_saturation_list, extracted_sn, warnings)
 
     return r
 
 
-def calculate_contrast(inp, webapp=False):
+def calculate_contrast(input, webapp=False):
     """
     This is a function to do the 'forward' exposure time calculation where given a dict
     in engine API input format we calculate the resulting coronagraphic contrast and return a Report
@@ -1287,18 +1287,18 @@ def calculate_contrast(inp, webapp=False):
     """
     warnings = {}
     try:
-        scene_configuration = inp['scene']
-        background = inp['background']
-        instrument_configuration = inp['configuration']
-        strategy_configuration = inp['strategy']
-        psf_subtraction_configuration = inp['strategy']['psf_subtraction_source']
+        scene_configuration = input['scene']
+        background = input['background']
+        instrument_configuration = input['configuration']
+        strategy_configuration = input['strategy']
+        psf_subtraction_configuration = input['strategy']['psf_subtraction_source']
     except KeyError as e:
         message = "Missing information required for the calculation: %s" % str(e)
         raise EngineInputError(value=message)
 
     # get the calculation configuration from the input or use the defaults
     if 'calculation' in input:
-        calc_config = CalculationConfig(config=inp['calculation'])
+        calc_config = CalculationConfig(config=input['calculation'])
     else:
         calc_config = CalculationConfig()
 
@@ -1426,11 +1426,11 @@ def calculate_contrast(inp, webapp=False):
     # Add the contrast curve and link relevant saturation maps to the extracted_sn dict for passing
     extracted_sn['contrast_curve'] = contrast_curve
 
-    r = Report(inp, my_detector_signal_list, my_detector_noise_list, my_detector_saturation_list, extracted_sn, warnings)
+    r = Report(input, my_detector_signal_list, my_detector_noise_list, my_detector_saturation_list, extracted_sn, warnings)
     return r
 
 
-def calculate_exposure_time(inp, webapp=False, **kwargs):
+def calculate_exposure_time(input, webapp=False, **kwargs):
     """
     This is a function to do the 'reverse' exposure time calculation where given a desired
     signal-to-noise ratio we calculate the optimal exposureSpecification and return a Report
