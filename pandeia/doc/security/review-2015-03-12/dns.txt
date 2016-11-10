@@ -1,0 +1,44 @@
+etc.stsci.edu
+	keeps current A/CNAME records
+	refers to hubble ETC
+
+jwst.etc.stsci.edu
+	production server
+	CNAME/A records to incoming web proxy
+	ssl proxy/load balancer to TBD
+
+jnightly.etc.stsci.edu
+	nightly test server
+	CNAME/A records to incoming web proxy
+	ssl proxy/load balancer to 
+		etcdevens.stsci.edu:4960
+	-> only proxies from internal networks
+
+jmultiple.etc.stsci.edu
+	CNAME/A records to incoming web proxy
+	ssl proxy/load balancer to 
+		etcbrady.stsci.edu:4950
+		etcdevens.stsci.edu:4950
+	-> only proxies from internal networks
+
+jwstdemo.etc.stsci.edu
+	CNAME/A records to incoming web proxy
+	ssl proxy/load balancer to 
+		etcbrady.stsci.edu:4242
+	-> only proxies from internal networks
+
+brady.etc.stsci.edu
+cartier.etc.stsci.edu
+devens.etc.stsci.edu
+edis.etc.stsci.edu
+	CNAME/A records to same machine name as seen from outside
+	runs wssvc and workers
+	open firewalls for incoming ports 5000-5100
+
+w1.etc.stsci.edu
+w2.etc.stsci.edu
+...
+	A records to new machines
+	running wssvc and workers 
+	open firewalls for incoming ports 5000-5100
+

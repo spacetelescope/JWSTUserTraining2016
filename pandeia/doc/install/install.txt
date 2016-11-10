@@ -1,0 +1,113 @@
+#####
+#
+# for typical developer, bash commands
+#
+
+	git clone git@github.com:STScI-SSB/pandeia.git
+	cd pandeia
+
+	# remember where the source directory is
+	sdir=`pwd`
+
+	# You can no longer run the system without installing it.
+	# Pick a directory to install in:
+	workdir=$HOME/workdir
+
+	# where the pandeia file tree is installed
+	idir=$workdir/pandeia
+
+	# where the data files for the running system are stored
+	ddir=$workdir/run
+
+#####
+#
+# setup for distributed system on central store
+#
+	idir=$HOME/pandeia
+	ddir=/users/sienkiew/pandeia
+	sdir=`pwd`
+
+#####
+#
+# initial setup
+#
+
+	export ddir idir sdir
+
+	sh $sdir/devtools/installhelper1.sh
+
+#####
+#
+# select your database credentials
+#
+
+	# cp ... $idir/db/credentials
+	# cp ui/pandeia/server/database/dev/banana.mysql.py $idir/db/credentials
+
+	# use sqlite for your database (developer):
+	cp ui/pandeia/server/database/dev/local.sqlite.py $idir/db/credentials
+
+#####
+#
+# install ureka
+#
+
+	# you can probably get away with using a different ureka.  If
+	# you want to try, skip only this section.
+	# b.t.w.  This is the JWST data analysis ureka - it does not
+	# have any IRAF in it.
+
+	cd $idir
+	curl http://ssb.stsci.edu/ureka/data_analysis_build1/install_ureka_data_analysis_build1 > urinst
+	rm -rf Ureka
+	sh urinst -u -n pda 
+
+#####
+#
+# configure ureka, new window with alias
+#
+
+	ur_setup - pda
+
+#####
+#
+# configure ureka, no ur_setup alias; you will need to enter the value for $idir
+#
+
+	eval `$idir/ur_setup -sh`
+
+#####
+#
+# install the server and supporting code
+#
+
+	cd $sdir/ui
+
+	sh READMEtps.sh
+
+	python setup.py install
+
+#####
+#
+# install the client
+#
+
+	cd $sdir/ui
+	cp -r client/. $idir/client/.
+
+#####
+#
+# install the engine and related data
+#
+
+	cd $sdir/engine
+
+	python setup.py install
+
+	# get the reference data:
+
+	git clone git@github.com:STScI-SSB/pandeia_data.git
+	cd pandeia_data
+
+	cp -r pandeia_data/. $idir/refdata
+

@@ -1,0 +1,27 @@
+Pandeia defines a number of internal angles. Some can be changed by the instrument configuration, while others may be fixed to a single value, by definition. Specifically, the PSF has a rotation angle relative to the telescope V2/V3, which aligns it with the instrument axis. The instrument axis is defined by either the dispersion direction and/or by the detector row/column angle. Spectroscopic modes always have a defined dispersion direction and a MULTIACCUM-type detector has an angle defined by the read noise covariance matrix. The detector angle defines the direction of the "fast-read" detector readout. Other type of readout are not currently supported. 
+
+PSF angle
+---------
+
+The fundamental angle of the ETC is the telescope+instrument axis defined by the PSF library, in the sense that all other angles should be in reference to the (fixed) PSF angles. The PSF angles should be aligned first with the dispersion direction (for spectroscopic modes) and secondly with the detector row or column axis for all modes. 
+
+Dispersion angle
+----------------
+
+The dispersion angle is the angle relative to the PSF that the spectrum is dispersed along. In the ETC, the dispersion angle is restricted to being a multiple of 90 degrees, with 0 degrees being horizontal with wavelength increasing to the right. 
+
+Detector (readout) angle
+------------------------
+
+The detector has a fast-read direction angle. This angle is restricted to either be aligned along rows or along columns. The order currently does not matter (up to down/down to up or left to right/right to left).
+
+Plotting angle
+--------------
+
+The output detector images can be rotated in multiples of 90 degrees to support flexible user interface requirements. 
+
+Limitations
+-----------
+
+The ETC cannot exactly support instruments for which the detector row/columns are not aligned with the dispersion axis.  
+

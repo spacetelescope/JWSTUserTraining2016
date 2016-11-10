@@ -1,0 +1,107 @@
+#####
+#
+# for typical developer, bash commands
+#
+
+	# You can no longer run the system without installing it.
+
+	# Pick the directory you installed in:
+	workdir=$HOME/workdir
+
+	# set these
+	idir=$workdir/pandeia
+	ddir=$workdir/run
+
+	cd $idir
+
+	ur_setup - pda
+
+#####
+#
+# run just the engine
+#
+
+	export pandeia_refdata=$idir/refdata
+	python
+	import pandeia.engine.perform_calculation as p
+	r = p.perform_calculation( { ... } )
+
+#####
+#
+# initialize the database
+#
+
+	cd $idir
+
+	# Select how to run the processes. This will be used by
+	# initdb to put the right records in the database.  If you
+	# don't set it, ./ctrl will choose a default for you according
+	# to your user name.  See ./ctrl for details
+
+	setenv STARTER 127
+	export STARTER=127
+		# Use 127.0.0.1 for the listening ports; run all
+		# the processes on the local machine.
+		# It will work anywhere, but you need to use a browser
+		# on the same machine as the server
+
+	setenv STARTER localhost
+	export STARTER=localhost
+		# Use platform.node() as the machine name for listening;
+		# run all the processes on the local machine.  Browsers
+		# can reach your server from other systems (subject to
+		# firewall limitations).
+
+	export STARTER=name
+		# select the multi-host config "name".  probably not
+		# interesting for client or engine development.
+
+	./ctrl initdb
+
+#####
+#
+# start the server
+#
+
+	# if you configured your database using STARTER=127, you still
+	# need to have that environment variable set here.
+
+	./ctrl start
+
+#####
+#
+# ask the server to crash; should shut down all the server processes
+# if everything is working correctly
+#
+
+	./ctrl crash
+
+
+#####
+#
+# kill known pandeia processes on this machine; looks in the database 
+# for process numbers.
+#
+
+	./ctrl nuke
+	# n.b. If you have gotten desynchronized with your database,
+	# you may need to manually kill some things
+
+
+#####
+#
+# see processes with pandeia in the command line
+#
+
+	./ctrl ps
+
+
+#####
+#
+# See Also
+#
+
+doc/dev/debugging.txt explains some tools for extracting calculation
+inputs from the database, running the engine on them, and comparing
+dictionaries.
+

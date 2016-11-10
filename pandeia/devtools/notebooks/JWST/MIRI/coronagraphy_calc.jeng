@@ -1,0 +1,209 @@
+{
+    "background": "low",
+    "configuration": {
+        "detector": {
+            "nexp": 1,
+            "ngroup": 10,
+            "nint": 10,
+            "readmode": "fast",
+            "subarray": "mask1065"
+        },
+        "instrument": {
+            "aperture": "fqpm1065",
+            "disperser": null,
+            "filter": "f1065c",
+            "instrument": "miri",
+            "mode": "coronagraphy"
+        }
+    },
+    "scene": [
+        {
+            "position": {
+                "orientation": 0.0,
+                "x_offset": 0.0,
+                "y_offset": 0.0
+            },
+            "shape": {
+                "geometry": "point"
+            },
+            "spectrum": {
+                "lines": [],
+                "normalization": {
+                    "bandpass": "bessel,h",
+                    "norm_flux": 5.2,
+                    "norm_fluxunit": "abmag",
+                    "norm_wave": 0,
+                    "norm_waveunit": "microns",
+                    "type": "photsys"
+                },
+                "sed": {
+                    "index": 0,
+                    "key": "a5v",
+                    "sed_type": "phoenix",
+                    "temp": 0,
+                    "unit": ""
+                }
+            }
+        },
+        {
+            "position": {
+                "orientation": 0.0,
+                "x_offset": 0.5,
+                "y_offset": -0.866
+            },
+            "shape": {
+                "geometry": "point"
+            },
+            "spectrum": {
+                "lines": [],
+                "normalization": {
+                    "bandpass": "bessel,h",
+                    "norm_flux": 14.2,
+                    "norm_fluxunit": "abmag",
+                    "norm_wave": 0,
+                    "norm_waveunit": "microns",
+                    "type": "photsys"
+                },
+                "sed": {
+                    "index": 0,
+                    "key": "",
+                    "sed_type": "blackbody",
+                    "temp": 1000,
+                    "unit": ""
+                }
+            }
+        },
+        {
+            "position": {
+                "orientation": 0.0,
+                "x_offset": 1.302,
+                "y_offset": 1.093
+            },
+            "shape": {
+                "geometry": "point"
+            },
+            "spectrum": {
+                "lines": [],
+                "normalization": {
+                    "bandpass": "bessel,h",
+                    "norm_flux": 15.2,
+                    "norm_fluxunit": "abmag",
+                    "norm_wave": 0,
+                    "norm_waveunit": "microns",
+                    "type": "photsys"
+                },
+                "sed": {
+                    "index": 0,
+                    "key": "",
+                    "sed_type": "blackbody",
+                    "temp": 1000,
+                    "unit": ""
+                }
+            }
+        },
+        {
+            "position": {
+                "orientation": 0.0,
+                "x_offset": 0.0,
+                "y_offset": 0.0
+            },
+            "shape": {
+                "geometry": "point"
+            },
+            "spectrum": {
+                "lines": [],
+                "normalization": {
+                    "bandpass": "bessel,h",
+                    "norm_flux": 4.7,
+                    "norm_fluxunit": "abmag",
+                    "norm_wave": 0,
+                    "norm_waveunit": "microns",
+                    "type": "photsys"
+                },
+                "sed": {
+                    "index": 0,
+                    "key": "a3v",
+                    "sed_type": "phoenix",
+                    "temp": 0,
+                    "unit": ""
+                }
+            }
+        },
+        {
+            "position": {
+                "orientation": 0.0,
+                "x_offset": -0.5638,
+                "y_offset": -0.2052
+            },
+            "shape": {
+                "geometry": "point"
+            },
+            "spectrum": {
+                "lines": [],
+                "normalization": {
+                    "bandpass": "bessel,h",
+                    "norm_flux": 14.2,
+                    "norm_fluxunit": "abmag",
+                    "norm_wave": 0,
+                    "norm_waveunit": "microns",
+                    "type": "photsys"
+                },
+                "sed": {
+                    "index": 0,
+                    "key": "",
+                    "sed_type": "blackbody",
+                    "temp": 1000,
+                    "unit": ""
+                }
+            }
+        }
+    ],
+    "strategy": {
+        "annulus_shape": "circular",
+        "aperture_size": 0.3,
+        "contrast_azimuth": 45,
+        "contrast_separation": 1,
+        "method": "coronagraphy",
+        "psf_subtraction": "optimal",
+        "psf_subtraction_source": {
+            "position": {
+                "orientation": 0.0,
+                "x_offset": -0.5638,
+                "y_offset": -0.2052
+            },
+            "shape": {
+                "geometry": "point"
+            },
+            "spectrum": {
+                "lines": [],
+                "normalization": {
+                    "bandpass": "bessel,h",
+                    "norm_flux": 14.2,
+                    "norm_fluxunit": "abmag",
+                    "norm_wave": 0,
+                    "norm_waveunit": "microns",
+                    "type": "photsys"
+                },
+                "sed": {
+                    "index": 0,
+                    "key": "",
+                    "sed_type": "blackbody",
+                    "temp": 1000,
+                    "unit": ""
+                }
+            }
+        },
+        "scene_rotation": 0,
+        "sky_annulus": [
+            0.45,
+            0.7
+        ],
+        "target_source": "4",
+        "target_type": "coords",
+        "target_xy": [
+            0,
+            0
+        ],
+        "units": "arcsec"
+    }
+}

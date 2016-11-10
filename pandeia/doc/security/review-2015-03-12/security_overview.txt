@@ -1,0 +1,338 @@
+Contents
+===
+
+        OWASP Top 10
+
+        Login and Session Cookies
+
+        Controlled Sharing of Data
+
+        Administrative Access
+
+        Reliability
+
+
+OWASP Top 10
+===
+
+A1-Injection
+        SQL
+                no, using only parameterized queries
+        shell, etc
+                no, not used in web service or data management
+        HTML
+                probably all over; client code needs review (after
+                the big demo mess) - easy to fix
+        log file
+                user data in logs is json encoded; review planned
+
+A2-Broken Authentication and Session Management
+        discussed below
+
+A3-Cross Site Scripting
+        client frequently receives untrusted data from the server
+        and places it in the display; it needs to be swept for
+        that to ensure that it is properly html encoded (planned)
+
+A4-Insecure Direct Object References
+        No.  Object references can be discovered, but all access
+        of any kind is checked on the server.
+
+        Incoming messages are divided into read messages, write
+        messages, and unprotected messages.  Read and write messages
+        are recognized by their name and checked at initial receipt.
+        Unprotected messages require more complex permission checking,
+        which is implemented in the service function.
+
+A5-Security Misconfiguration
+        - requires proper firewall and proxy configuration to pass 
+          incoming connections
+        - requires firewall to block other ports
+        - requires right TLS certificate
+        - requires SSO to work
+        - Keep up with OS patches
+
+        Currently using Tornado 3.8, but no security issues identified
+        in the release notes for 4.0, 4.0.1, 4.0.2.  (There are
+        incompatible API changes, though.)
+
+A6-Sensitive Data Exposure
+        If somebody cracks the OS or database server, it can be
+        extracted.  Nothing we have is worth the extra cost of
+        encryption at rest.  We do not guard against systems staff
+        (including ETC development team) observing the data in the
+        database or logs.
+
+        (The sensitive data is the nature of the planned proposal
+        and who is planning it.)
+
+A7-Missing Function Level Access Control
+        Must be checked by source code audit.  Simple access control
+        (for single item read or write) is performed early.  Complex
+        access control (involving access to multiple items) is
+        written with customized code.
+
+A8-Cross-Site Request Forgery
+        No HTTP transactions update stored data.  A sufficiently
+        complex CSRF could extract a plot image and post it to
+        another server, providing a way to extract some rough
+        indications of results (but not the inputs that produced
+        those results).  I conclude that no further action is needed.
+
+A9-Using Components with Known Vulnerabilities
+        No known instances of this.
+
+A10-Unvalidated Redirects and Forwards
+        Redirects are not based on any external input. 
+        (Analysis excludes SSO)
+
+        Websocket host:port is chosen by the main_server based on
+        user input, but it only chooses from the configured wssvc
+        processes.
+
+
+
+Login and Session Cookies
+===
+
+login:
+
+        - SSO
+
+        - Create New User (when SSO can support it)
+
+        - Anonymous (unique uid each time)
+
+        - fake login
+                - exists only in test systems
+                - no actual authentication performed
+
+        - method of login does not affect access
+                except for known users having admin
+
+        - anonymous user can later log in with SSO or Create User and
+          bring their data along.
+
+session cookie:
+
+        - session id is small integer plus auth code
+                - auth code is 48 bytes from /dev/urandom
+
+        - session id and auth code in database
+                - no crypto key to attack
+
+        - only sessions that are in the database will work
+                - no explicit countermeasures to timing attack,
+                  but network latency and the database index
+                  ought to be good enough
+
+        - sessions expire (duration tbd)
+
+        - unable to revoke sessions that change IP address because
+          some outgoing proxies do that (!)
+
+main server: HTTPS
+
+        - static files: no user auth required
+
+        - issues a session cookie after either the SSO dance
+          or anonymous login
+
+        - login page shows logged in user, then links to the application
+
+wssvc: WSS, HTTPS
+
+        - client asks main server for IP/port of wssvc
+                - allocate arbitrary for non-workbook transactions
+                - single wssvc handles all clients for a specific
+                  open workbook
+
+        - client contacts wssvc over WSS
+
+        - client presents session key through websocket message
+                - not available from HTTP cookies because different host name
+                - yes, javascript can access the cookie
+                - looking in to Domain and HtmlOnly cookie attributes
+
+security risk of cookie management:
+
+        - fingerprinting?
+                no, cookie is "jwstetc_session"
+
+        - length?
+                48 bytes of crypto-random
+
+        - entropy?
+                /dev/urandom
+
+        - content?
+                no PII
+                auth portion not related to session numbers
+
+        - management
+                cookies for HTTPS
+                message for WSS (may switch to cookie)
+                cached for performance (planned)
+                revoke authority by admin command (planned)
+                secure cookie attribute (planned)
+
+        - prediction, brute force
+                no. truly random auth token.
+
+        - fixation
+                - OWASP examples don't work against this server
+                - made up cookies are invalid
+                - valid cookies would grant access only to the attacker's data
+                        - trick someone into logging in as me, but not noticing?
+                - very high social risk to attacker if caught
+                        - assumes we would reveal the attack rather than
+                          help attacker avoid the consequences
+
+        - XSS to steal cookie
+                looking in to Domain and HtmlOnly cookie attribute
+                Need a domain for development and testing
+
+        - DNS poisoning
+                TLS should guard against that, but so many sites
+                have expired certs that everybody just clicks 
+                "accept".  Nothing I can do.
+
+        - session expiration
+                duration tbd
+
+        - logout
+                - using SSO logout hack; not extensively tested
+                - invalid cookie is the same as no cookie
+
+        - revoke cookie on window close
+                inconsistent with application work flow
+
+        - disable cross-tab sessions
+                inconsistent with application work flow
+
+        - auto logout
+                only by expiration (see SSO)
+
+        - revoke other sessions belonging to the same user
+                planned
+
+
+Controlled Sharing of Data
+===
+
+Users can share workbooks
+
+        - access control performed in the server
+                - permission model fully defined
+                - already known to work (See A7)
+
+        - GUI not designed or implemented
+                - scenarios acceptable to ETCWG (scientists) not
+                  known; taking back seat to other work
+
+        - how to know identity of who to share with?
+                - unclear, pending desired GUI
+
+        - incompletely designed features attract scope creep :(
+
+
+Administrative Access
+===
+
+Production instance managed by development team
+
+        - no protection against developers
+                - developers are not users, so have no advantage
+                  from special access
+                - features to ease snooping for use in debugging
+                        - special flag for admin-capable user
+                        - impersonate user (like su)
+                        - copy without permission (obtain data to
+                          work with in debugging problems)
+                        - actions logged (planned)
+
+        - no protection against ITSD
+                - no special access needed or provided
+
+Science Help Desk
+
+        - user can share a workbook with the science help desk using
+          usual permission system
+
+        - undecided whether science help desk may have developer-style
+          access
+
+
+
+
+
+Internal Concerns
+===
+
+Data storage
+
+        - database access through a single MySQL user
+                - password stored in plaintext
+                - ITSD made it up - looks obfuscated :)
+
+        - all servers and workers require access to a shared file
+          system
+                - database performs poorly with 10 MB blobs
+                        - may grow as scientists think of more data
+                          they want stored.
+                - originally planned to be central store
+                        - was de-facto standard when we started
+                        - easy to assign existing hardware as
+                          temporary compute nodes
+
+        - SHOULD HAVE a pseudo-user to run the production server
+                - previously refused on grounds of policy about
+                  shared accounts
+                - will use shared user "iraf" if necessary
+
+
+Internal communications
+
+        - communications within the server cluster is not encrypted
+                - probability of compromise is low
+                - easier ways to get at the data
+                - encryption adds to developer overhead
+                        - no time to do anything not essential
+
+Reliability
+===
+
+data
+
+        - Mysql managed by ITSD
+                - high availability option with failover
+                - not transparent to user, but good enough
+                - existing system is very reliable
+                - transaction-safe backups by ITSD
+
+        - no resources to convert to SQL Server now
+                - usage is almost portable enough to switch later
+                        - SQL Server can't do nested selects
+                        - specifics of table locking differ
+                - can't afford to develop on an unfamiliar database
+
+        - central store
+                - fault tolerant storage
+                - backups by ITSD
+
+computers
+
+        - modular system
+                - can add/remove servers and workers while running
+                        - manual only, some disruption to users
+                - can restart processes that crash
+                - can run workers on non-dedicated hardware if necessary
+                        - if heavy load is higher than expected
+
+        - virtual machines by the time we get into production
+                - add machines during predicted heavy load periods
+                - vmotion for hardware problems
+
+        - limited by transaction capability of database server
+                - will be LOTS of connections to database server
+
