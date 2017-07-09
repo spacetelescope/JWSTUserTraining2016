@@ -988,7 +988,7 @@ class AdvancedPSF(object):
 
         kernel = profile['int']
 #        npix = psf_npix / psf_upsamp
-        npix = scene_npix / psf_upsamp
+        npix = int(scene_npix / psf_upsamp)
         new_shape = (npix, npix)
 
         # If there is a scene, convolve with it
